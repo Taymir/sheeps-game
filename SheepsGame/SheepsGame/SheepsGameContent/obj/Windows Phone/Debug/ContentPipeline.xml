@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>bullet.png</Source>
+      <Name>bullet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\bullet.xnb</Output>
+      <Time>2011-03-12T20:38:34.263+03:00</Time>
+    </Item>
+    <Item>
+      <Source>fon.png</Source>
+      <Name>fon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\fon.xnb</Output>
+      <Time>2011-03-12T21:00:57.055+03:00</Time>
+    </Item>
+    <Item>
+      <Source>fon_2.png</Source>
+      <Name>fon_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\fon_2.xnb</Output>
+      <Time>2011-03-12T21:08:27.852+03:00</Time>
+    </Item>
+    <Item>
+      <Source>logo.jpg</Source>
+      <Name>logo</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\logo.xnb</Output>
+      <Time>2011-03-12T14:57:01.566+03:00</Time>
+    </Item>
+    <Item>
+      <Source>oxotnik.png</Source>
+      <Name>oxotnik</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\oxotnik.xnb</Output>
+      <Time>2011-03-12T18:02:01.004+03:00</Time>
+    </Item>
+    <Item>
+      <Source>default.spritefont</Source>
+      <Name>default</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\default.xnb</Output>
+      <Time>2011-03-12T19:06:16.838+03:00</Time>
+    </Item>
+    <Item>
+      <Source>Joystick.png</Source>
+      <Name>Joystick</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\Joystick.xnb</Output>
+      <Time>2011-03-12T19:52:00+03:00</Time>
+    </Item>
+    <Item>
+      <Source>Ufo.png</Source>
+      <Name>Ufo</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\Ufo.xnb</Output>
+      <Time>2011-03-12T19:52:00+03:00</Time>
+    </Item>
+    <Item>
+      <Source>sheep.png</Source>
+      <Name>sheep</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\sheep.xnb</Output>
+      <Time>2011-03-12T17:55:00+03:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>WindowsPhone</TargetPlatform>
+      <TargetProfile>Reach</TargetProfile>
+      <BuildConfiguration>Debug</BuildConfiguration>
+      <CompressContent>false</CompressContent>
+      <RootDirectory>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGameContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGameContent\obj\Windows Phone\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T13:41:18+04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T13:41:18+04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T13:41:18+04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T13:41:18+04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T13:41:18+04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T13:41:18+04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2011-03-13T00:47:52.1844338+03:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>

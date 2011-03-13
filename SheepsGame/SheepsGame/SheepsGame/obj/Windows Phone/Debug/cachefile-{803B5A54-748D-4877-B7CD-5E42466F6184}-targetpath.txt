@@ -1,0 +1,9 @@
+Content\bullet.xnb
+Content\fon.xnb
+Content\fon_2.xnb
+Content\logo.xnb
+Content\oxotnik.xnb
+Content\default.xnb
+Content\Joystick.xnb
+Content\Ufo.xnb
+Content\sheep.xnb
