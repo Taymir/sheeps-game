@@ -1,1 +1,2 @@
 C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGameContent\obj\Windows Phone\Debug\ResolveAssemblyReference.cache
+C:\Users\Yaroslav\Desktop\SheepsGame\SheepsGame\SheepsGame\SheepsGameContent\obj\Windows Phone\Debug\ResolveAssemblyReference.cache

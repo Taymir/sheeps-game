@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
+using SheepsGame.Input;
 
 namespace SheepsGame
 {
@@ -19,20 +20,17 @@ namespace SheepsGame
     {
         public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D texture;
         MainMenu mainMenu;
         Guard guard;
 
-        SpriteBatch joystickSpriteBatch;
-        Texture2D textureJoystick;
-        Vector2 positionJoystick;
-        Ufo ufo;
+        GameObjects.Ufo.Ufo ufo;
+        Joystick joystick;
 
         public static Game1 game;
         private GameObjects.Sheep sheep;
         public SpriteFont spriteFont;
 
-        Texture2D background;
+        public static Level level1;
 
         public Game1()
         {
@@ -69,48 +67,40 @@ namespace SheepsGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            texture = Content.Load<Texture2D>("logo");
-            rect = new Rectangle(0, 0, texture.Width, texture.Height);
-            guard = new Guard(Content.Load<Texture2D>("oxotnik"), Content.Load<Texture2D>("bullet"));
+            guard = new Guard(Content.Load<Texture2D>("guard"), Content.Load<Texture2D>("bullet"));
             guard.position.Y = graphics.PreferredBackBufferHeight - guard.texture.Height - 5;
             spriteFont = Content.Load<SpriteFont>("default");
 
             mainMenu = new MainMenu();
-            background = Content.Load<Texture2D>("fon_2");
 
-            joystickSpriteBatch = new SpriteBatch(GraphicsDevice);
-            textureJoystick = this.Content.Load<Texture2D>("Joystick");
-            positionJoystick = new Vector2(GraphicsDevice.Viewport.Width - 175, GraphicsDevice.Viewport.Height / 2 - 60);
+            joystick = new Joystick(Content.Load<Texture2D>("Joystick"), new Vector2(GraphicsDevice.Viewport.Width - 175, GraphicsDevice.Viewport.Height / 2 - 60));
 
-            ufo = new Ufo(this.Content.Load<Texture2D>("Ufo"), new Vector2(0, 0));
+            ufo = new GameObjects.Ufo.Ufo(this.Content.Load<Texture2D>("Ufo"));
+            ufo.position.X = GraphicsDevice.Viewport.Width / 2;
 
             sheep.LoadContent();
+
+            level1 = new Level(3000);
+            level1.backgroundTexture = Content.Load<Texture2D>("fon_2");
+
+            
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
+ 
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
             sheep.UnloadContent();
         }
-        Rectangle rect;
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
+
         protected override void Update(GameTime gameTime)
         {
             TouchCollection touches = TouchPanel.GetState();
             if (touches.Count > 0)
             {
-                guard.FireBullet();
-                //guard.position.X = touches[0].Position.X;
-                //guard.position.Y = touches[0].Position.Y;
-
+                //guard.FireBullet();
+                joystick.Update(touches, ufo);
             }
 
             KeyboardState keyState = Keyboard.GetState();
@@ -121,86 +111,31 @@ namespace SheepsGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
-            guard.Update(gameTime);
+            //guard.Update(gameTime);
             mainMenu.Update(gameTime, touches);
-
-            // Работа с джойстиком (стас)
-            TouchCollection touchCollection = TouchPanel.GetState();
-
-            if (touchCollection.Count > 0)//@REFACTOR
-            {
-                // Движение вправо
-                if (touchCollection[0].Position.X <= this.GraphicsDevice.Viewport.Width - 40 &&
-                    touchCollection[0].Position.X >= this.GraphicsDevice.Viewport.Width - 90 &&
-                    touchCollection[0].Position.Y >= this.GraphicsDevice.Viewport.Height / 2 - 30 &&
-                    touchCollection[0].Position.Y <= this.GraphicsDevice.Viewport.Height / 2 + 30)
-                {
-                    ufo.goRight();
-                }
-                // Движение влево
-                else if (touchCollection[0].Position.X <= this.GraphicsDevice.Viewport.Width - 120 &&
-                  touchCollection[0].Position.X >= this.GraphicsDevice.Viewport.Width - 170 &&
-                  touchCollection[0].Position.Y >= this.GraphicsDevice.Viewport.Height / 2 - 30 &&
-                  touchCollection[0].Position.Y <= this.GraphicsDevice.Viewport.Height / 2 + 30) // Движение влево
-                {
-                    ufo.goLeft();
-                }
-                // Движение вверх
-                else if (touchCollection[0].Position.X <= this.GraphicsDevice.Viewport.Width - 90 &&
-                  touchCollection[0].Position.X >= this.GraphicsDevice.Viewport.Width - 140 &&
-                  touchCollection[0].Position.Y >= this.GraphicsDevice.Viewport.Height / 2 - 60 &&
-                  touchCollection[0].Position.Y <= this.GraphicsDevice.Viewport.Height / 2 + 30) //Движение вверх
-                {
-                    ufo.goUp();
-                }
-                // Движение вниз
-                else if (touchCollection[0].Position.X <= this.GraphicsDevice.Viewport.Width - 90 &&
-                  touchCollection[0].Position.X >= this.GraphicsDevice.Viewport.Width - 140 &&
-                  touchCollection[0].Position.Y >= this.GraphicsDevice.Viewport.Height / 2 - 90 &&
-                  touchCollection[0].Position.Y <= this.GraphicsDevice.Viewport.Height / 2 + 60) // Движение вниз
-                {
-                    ufo.goDown();
-                }
-            }
-            //ufo.UpdatePosition(new Vector2(touchCollection[0].Position.X, touchCollection[0].Position.Y));
-
 
             //(ТИМ)
             ufo.Update(gameTime);
             sheep.Update(gameTime);
+           
 
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
             spriteBatch.Begin();
-            for (int i = 0; i < 30; i++)
-            {
-                spriteBatch.Draw(background, new Rectangle(i * background.Width, 0, background.Width, graphics.GraphicsDevice.Viewport.Height), Color.White);
-            }
+            level1.Draw(spriteBatch);
             //guard.Draw(spriteBatch);
             //mainMenu.Draw(spriteBatch);
 
-            //(ТИМ)
             sheep.Draw(spriteBatch);
             ufo.Draw(spriteBatch);
-
+            joystick.Draw(spriteBatch);
             spriteBatch.End();
-
-            //(СТАС)
-            joystickSpriteBatch.Begin();
-            joystickSpriteBatch.Draw(textureJoystick, positionJoystick, Color.White);
-            joystickSpriteBatch.End();
-
 
             base.Draw(gameTime);
         }

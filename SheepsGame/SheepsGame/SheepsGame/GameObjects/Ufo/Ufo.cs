@@ -5,17 +5,17 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace SheepsGame
+namespace SheepsGame.GameObjects.Ufo
 {
     class Ufo
     {
         private Texture2D texture;
-        public Vector2 position;
+        public Vector2 position = new Vector2(100, 100);
         public Vector2 velocity;
 
         private float speed = 3.5f;
         private float friction = 0.93f;
-        private float maxspeed = 15f;
+        private float maxspeed = 16.0f;
         private float rotation = 0.0f;
 
         public float x
@@ -34,10 +34,9 @@ namespace SheepsGame
             }
         }
 
-        public Ufo(Texture2D texture, Vector2 position)
+        public Ufo(Texture2D texture)
         {
             this.texture = texture;
-            this.position = position;
         }
 
         public void goLeft()
@@ -75,7 +74,9 @@ namespace SheepsGame
 
         private void UpdatePosition()
         {
-            position += velocity;
+            if (!Game1.level1.Scroll(velocity.X))
+                position.X += velocity.X;
+            position.Y += velocity.Y;
         }
 
         private void limitSpeed()

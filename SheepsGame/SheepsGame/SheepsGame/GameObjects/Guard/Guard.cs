@@ -31,7 +31,8 @@ namespace SheepsGame
             if (bullet.alive)
             {
                 bullet.position += bullet.velocity;
-                if (!new Rectangle(0, 0, Game1.game.graphics.GraphicsDevice.Viewport.Width, Game1.game.graphics.GraphicsDevice.Viewport.Height).Contains(new Rectangle((int)bullet.position.X, (int)bullet.position.Y, 10, 10)))
+                if (!new Rectangle(0, 0, Game1.game.graphics.GraphicsDevice.Viewport.Width, Game1.game.graphics.GraphicsDevice.Viewport.Height).Contains
+                    (new Rectangle((int)bullet.position.X, (int)bullet.position.Y, 10, 10)))
                 {
                     bullet.alive = false;
                 }
@@ -63,7 +64,8 @@ namespace SheepsGame
             spriteBatch.Draw(texture, position, Color.White);
 
           if(bullet.alive)
-            spriteBatch.Draw(bullet.texture, new Rectangle((int)bullet.position.X, (int)bullet.position.Y, 30, 30), null, Color.White, (float)Math.PI*2 - angle, new Vector2(bullet.texture.Width/2, bullet.texture.Height/2), SpriteEffects.None, 1.0f);
+            spriteBatch.Draw(bullet.texture, new Rectangle((int)bullet.position.X, (int)bullet.position.Y, 30, 30), null, Color.White, (float)Math.PI*2 - angle, 
+                new Vector2(bullet.texture.Width/2, bullet.texture.Height/2), SpriteEffects.None, 1.0f);
         }
     }
 }

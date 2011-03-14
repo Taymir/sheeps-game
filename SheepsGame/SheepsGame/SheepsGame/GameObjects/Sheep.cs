@@ -25,7 +25,11 @@ namespace SheepsGame.GameObjects
         private Random random;
 
         private Vector2 ai_position;
-        private string ai_state = "IDLE";
+        enum AI_state {
+            Idle, Approach
+        };
+
+        AI_state ai_state = AI_state.Idle;
 
         public Sheep()
         {
@@ -87,10 +91,10 @@ namespace SheepsGame.GameObjects
 
             switch (this.ai_state)
             {
-                case "IDLE":
+                case AI_state.Idle:
                     ai_idle_state(gameTime);
                     break;
-                case "APPROACH":
+                case AI_state.Approach:
                     ai_approach_position_state(gameTime);
                     break;
             }
@@ -101,7 +105,7 @@ namespace SheepsGame.GameObjects
         private void ai_pre_idle_state(GameTime time)
         {
             idleCompleteTime = time.TotalGameTime.Seconds + random.Next(3, 7); //3-7 сек покоя
-            ai_state = "IDLE";
+            ai_state = AI_state.Idle;
 
         }
 
@@ -121,7 +125,7 @@ namespace SheepsGame.GameObjects
         {
             float new_X = random.Next(50, 600);
             ai_position = new Vector2(new_X, position.Y);
-            ai_state = "APPROACH";
+            ai_state = AI_state.Approach;
         }
 
         private void ai_approach_position_state(GameTime time)
@@ -143,7 +147,8 @@ namespace SheepsGame.GameObjects
         public void Draw(SpriteBatch sprite)
         {
             SpriteEffects effects = (velocity.X > 0? SpriteEffects.None : SpriteEffects.FlipHorizontally);
-            sprite.Draw(texture, position, null, Color.White, 0f, Vector2.Zero, 1f, effects, 0f);
+            Vector2 screenPos = Game1.level1.GetScreenVector(position);
+            sprite.Draw(texture, screenPos, null, Color.White, 0f, Vector2.Zero, 1f, effects, 0f);
         }
 
 

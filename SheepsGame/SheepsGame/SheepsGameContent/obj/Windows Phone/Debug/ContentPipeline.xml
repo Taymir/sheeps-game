@@ -38,22 +38,13 @@
       <Time>2011-03-12T14:57:01.566+03:00</Time>
     </Item>
     <Item>
-      <Source>oxotnik.png</Source>
-      <Name>oxotnik</Name>
+      <Source>guard.png</Source>
+      <Name>guard</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\oxotnik.xnb</Output>
+      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\guard.xnb</Output>
       <Time>2011-03-12T18:02:01.004+03:00</Time>
-    </Item>
-    <Item>
-      <Source>default.spritefont</Source>
-      <Name>default</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\default.xnb</Output>
-      <Time>2011-03-12T19:06:16.838+03:00</Time>
     </Item>
     <Item>
       <Source>Joystick.png</Source>
@@ -81,6 +72,24 @@
       <Options>None</Options>
       <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\sheep.xnb</Output>
       <Time>2011-03-12T17:55:00+03:00</Time>
+    </Item>
+    <Item>
+      <Source>default.spritefont</Source>
+      <Name>default</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\default.xnb</Output>
+      <Time>2011-03-12T19:06:16.838+03:00</Time>
+    </Item>
+    <Item>
+      <Source>ray.png</Source>
+      <Name>ray</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\ray.xnb</Output>
+      <Time>2011-03-13T17:16:32.0610875+03:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

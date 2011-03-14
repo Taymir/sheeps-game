@@ -1,16 +1,17 @@
-﻿<xapCache source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\SheepsGame.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="13.03.2011 3:46:00">
+﻿<xapCache source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\SheepsGame.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="13.03.2011 17:26:40">
   <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\Background.png" archivePath="Background.png" lastWriteTime="13.03.2011 0:59:47" />
   <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\GameThumbnail.png" archivePath="GameThumbnail.png" lastWriteTime="13.03.2011 0:59:47" />
   <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="13.03.2011 1:00:02" />
   <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\obj\Windows Phone\Debug\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="13.03.2011 1:00:02" />
-  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\SheepsGame.dll" archivePath="SheepsGame.dll" lastWriteTime="13.03.2011 3:45:59" />
-  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\bullet.xnb" archivePath="Content\bullet.xnb" lastWriteTime="13.03.2011 1:07:52" />
-  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\fon.xnb" archivePath="Content\fon.xnb" lastWriteTime="13.03.2011 1:07:53" />
-  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\fon_2.xnb" archivePath="Content\fon_2.xnb" lastWriteTime="13.03.2011 1:07:53" />
-  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\logo.xnb" archivePath="Content\logo.xnb" lastWriteTime="13.03.2011 1:07:53" />
-  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\oxotnik.xnb" archivePath="Content\oxotnik.xnb" lastWriteTime="13.03.2011 1:07:53" />
-  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\default.xnb" archivePath="Content\default.xnb" lastWriteTime="13.03.2011 1:07:53" />
-  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\Joystick.xnb" archivePath="Content\Joystick.xnb" lastWriteTime="13.03.2011 1:13:53" />
-  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\Ufo.xnb" archivePath="Content\Ufo.xnb" lastWriteTime="13.03.2011 1:13:53" />
-  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\sheep.xnb" archivePath="Content\sheep.xnb" lastWriteTime="13.03.2011 1:20:41" />
+  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\SheepsGame.dll" archivePath="SheepsGame.dll" lastWriteTime="13.03.2011 17:26:39" />
+  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\bullet.xnb" archivePath="Content\bullet.xnb" lastWriteTime="13.03.2011 13:47:18" />
+  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\fon.xnb" archivePath="Content\fon.xnb" lastWriteTime="13.03.2011 13:47:18" />
+  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\fon_2.xnb" archivePath="Content\fon_2.xnb" lastWriteTime="13.03.2011 13:47:18" />
+  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\logo.xnb" archivePath="Content\logo.xnb" lastWriteTime="13.03.2011 13:47:18" />
+  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\guard.xnb" archivePath="Content\guard.xnb" lastWriteTime="13.03.2011 13:47:18" />
+  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\Joystick.xnb" archivePath="Content\Joystick.xnb" lastWriteTime="13.03.2011 13:47:18" />
+  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\Ufo.xnb" archivePath="Content\Ufo.xnb" lastWriteTime="13.03.2011 13:47:18" />
+  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\sheep.xnb" archivePath="Content\sheep.xnb" lastWriteTime="13.03.2011 13:47:18" />
+  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\default.xnb" archivePath="Content\default.xnb" lastWriteTime="13.03.2011 13:47:18" />
+  <file source="C:\Users\u7\Documents\MyProjects\Sheeps\code\SheepsGame\SheepsGame\SheepsGame\bin\Windows Phone\Debug\Content\ray.xnb" archivePath="Content\ray.xnb" lastWriteTime="13.03.2011 17:23:32" />
 </xapCache>

@@ -62,8 +62,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="oxotnik.png">
-      <Name>oxotnik</Name>
+    <Compile Include="guard.png">
+      <Name>guard</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -90,6 +90,13 @@
   <ItemGroup>
     <Compile Include="sheep.png">
       <Name>sheep</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ray.png">
+      <Name>ray</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
