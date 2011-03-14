@@ -9,6 +9,7 @@ namespace SheepsGame.GameObjects.Ufo
 {
     class Ufo
     {
+        private const string textureName = "ufo";
         private Texture2D texture;
         public Vector2 position = new Vector2(100, 100);
         public Vector2 velocity;
@@ -17,6 +18,8 @@ namespace SheepsGame.GameObjects.Ufo
         private float friction = 0.93f;
         private float maxspeed = 16.0f;
         private float rotation = 0.0f;
+
+        private GameObjects.Ufo.Ray ray;
 
         public float x
         {
@@ -34,9 +37,21 @@ namespace SheepsGame.GameObjects.Ufo
             }
         }
 
-        public Ufo(Texture2D texture)
+        public Ufo()
         {
-            this.texture = texture;
+            this.ray = new Ray();
+        }
+
+        public void LoadContent()
+        {
+            texture = Game1.game.Content.Load<Texture2D>(textureName);
+            ray.LoadContent();
+        }
+
+        public void UnloadContent()
+        {
+            //TODO
+            ray.UnloadContent();
         }
 
         public void goLeft()
@@ -64,6 +79,16 @@ namespace SheepsGame.GameObjects.Ufo
             velocity *= friction;
         }
 
+        public void fire()
+        {
+            ray.visible = true;
+        }
+
+        public void stopFire()
+        {
+            ray.visible = false;
+        }
+
         private void correctLowVelocity()
         {
             if (velocity.X < .5f && velocity.X > -.5f)
@@ -77,6 +102,8 @@ namespace SheepsGame.GameObjects.Ufo
             if (!Game1.level1.Scroll(velocity.X))
                 position.X += velocity.X;
             position.Y += velocity.Y;
+
+            ray.position = this.position;
         }
 
         private void limitSpeed()
@@ -115,10 +142,13 @@ namespace SheepsGame.GameObjects.Ufo
             UpdatePosition();
             limitSpeed();
             inertiaDeviation();
+            
+            ray.Update(time);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            ray.Draw(spriteBatch);
             spriteBatch.Draw(texture, position, null, Color.White, rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 0f);
         }
     }

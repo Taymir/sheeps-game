@@ -54,6 +54,7 @@ namespace SheepsGame
         {
             // TODO: Add your initialization logic here
             sheep = new GameObjects.Sheep();
+            ufo = new GameObjects.Ufo.Ufo();
             base.Initialize();
         }
 
@@ -72,10 +73,10 @@ namespace SheepsGame
             spriteFont = Content.Load<SpriteFont>("default");
 
             mainMenu = new MainMenu();
-
+            ufo.LoadContent();
             joystick = new Joystick(Content.Load<Texture2D>("Joystick"), new Vector2(GraphicsDevice.Viewport.Width - 175, GraphicsDevice.Viewport.Height / 2 - 60));
 
-            ufo = new GameObjects.Ufo.Ufo(this.Content.Load<Texture2D>("Ufo"));
+            
             ufo.position.X = GraphicsDevice.Viewport.Width / 2;
 
             sheep.LoadContent();
@@ -91,17 +92,16 @@ namespace SheepsGame
         {
             // TODO: Unload any non ContentManager content here
             sheep.UnloadContent();
+            ufo.UnloadContent();
         }
 
 
         protected override void Update(GameTime gameTime)
         {
             TouchCollection touches = TouchPanel.GetState();
-            if (touches.Count > 0)
-            {
-                //guard.FireBullet();
-                joystick.Update(touches, ufo);
-            }
+
+            //guard.FireBullet();
+            joystick.Update(touches, ufo);
 
             KeyboardState keyState = Keyboard.GetState();
             if (keyState.IsKeyDown(Keys.Escape))
@@ -117,7 +117,6 @@ namespace SheepsGame
             //(“»Ã)
             ufo.Update(gameTime);
             sheep.Update(gameTime);
-           
 
             base.Update(gameTime);
         }

@@ -13,6 +13,15 @@ namespace SheepsGame.Input
         Texture2D textureJoystick;
         Vector2 positionJoystick;
 
+        Rectangle rightButton = new Rectangle(90, 0, 45, 135);
+        Rectangle leftButton = new Rectangle(0, 0, 45, 135);
+        Rectangle upButton = new Rectangle(0, 0, 135, 45);
+        Rectangle downButton = new Rectangle(0, 90, 135, 45);
+        Rectangle centerButton = new Rectangle(45, 45, 45, 45);
+
+        bool centerButtonClicked = false;
+
+
         public Joystick(Texture2D texture, Vector2 position)
         {
             textureJoystick = texture;
@@ -21,38 +30,41 @@ namespace SheepsGame.Input
 
         public void Update(TouchCollection touches, GameObjects.Ufo.Ufo ufo)
         {
-            // Движение вправо
-            if (touches[0].Position.X <= Game1.game.graphics.GraphicsDevice.Viewport.Width - 40 &&
-                touches[0].Position.X >= Game1.game.graphics.GraphicsDevice.Viewport.Width - 90 &&
-                touches[0].Position.Y >= Game1.game.graphics.GraphicsDevice.Viewport.Height / 2 - 30 &&
-                touches[0].Position.Y <= Game1.game.graphics.GraphicsDevice.Viewport.Height / 2 + 30)
+            if (touches.Count > 0)
             {
-                ufo.goRight();
+                if (buttonClicked(touches[0], rightButton))
+                    ufo.goRight();
+                if (buttonClicked(touches[0], leftButton))
+                    ufo.goLeft();
+                if (buttonClicked(touches[0], upButton))
+                    ufo.goUp();
+                if (buttonClicked(touches[0], downButton))
+                    ufo.goDown();
+
+                if (buttonClicked(touches[0], centerButton))
+                {
+                    if (!centerButtonClicked)
+                    {
+                        centerButtonClicked = true;
+                        ufo.fire();
+                    }
+                }
+            } else {
+                if (centerButtonClicked)
+                {
+                    centerButtonClicked = false;
+                    ufo.stopFire();
+                }
             }
-            // Движение влево
-            else if (touches[0].Position.X <= Game1.game.graphics.GraphicsDevice.Viewport.Width - 120 &&
-              touches[0].Position.X >= Game1.game.graphics.GraphicsDevice.Viewport.Width - 170 &&
-              touches[0].Position.Y >= Game1.game.graphics.GraphicsDevice.Viewport.Height / 2 - 30 &&
-              touches[0].Position.Y <= Game1.game.graphics.GraphicsDevice.Viewport.Height / 2 + 30) // Движение влево
-            {
-                ufo.goLeft();
-            }
-            // Движение вверх
-            else if (touches[0].Position.X <= Game1.game.graphics.GraphicsDevice.Viewport.Width - 90 &&
-              touches[0].Position.X >= Game1.game.graphics.GraphicsDevice.Viewport.Width - 140 &&
-              touches[0].Position.Y >= Game1.game.graphics.GraphicsDevice.Viewport.Height / 2 - 60 &&
-              touches[0].Position.Y <= Game1.game.graphics.GraphicsDevice.Viewport.Height / 2 + 30) //Движение вверх
-            {
-                ufo.goUp();
-            }
-            // Движение вниз
-            else if (touches[0].Position.X <= Game1.game.graphics.GraphicsDevice.Viewport.Width - 90 &&
-              touches[0].Position.X >= Game1.game.graphics.GraphicsDevice.Viewport.Width - 140 &&
-              touches[0].Position.Y >= Game1.game.graphics.GraphicsDevice.Viewport.Height / 2 - 90 &&
-              touches[0].Position.Y <= Game1.game.graphics.GraphicsDevice.Viewport.Height / 2 + 60) // Движение вниз
-            {
-                ufo.goDown();
-            }
+        }
+
+        private bool buttonClicked(TouchLocation touch, Rectangle buttonRect)
+        {
+            buttonRect.Offset((int)positionJoystick.X, (int)positionJoystick.Y);
+
+            if(buttonRect.Contains((int)touch.Position.X, (int)touch.Position.Y))
+                return true;
+            return false;
         }
 
         public void Draw(SpriteBatch spriteBatch)
