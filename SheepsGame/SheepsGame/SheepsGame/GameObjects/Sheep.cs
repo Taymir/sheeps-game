@@ -15,25 +15,28 @@ namespace SheepsGame.GameObjects
 {
     class Sheep
     {
-        private const string textureName = "sheep";
-        private Texture2D texture;
+        const string textureName = "sheep";
+        Texture2D texture;
         Vector2 position;
         Vector2 velocity;
-        private float speed = 2.5f;
+        float speed = 2.5f;
 
-        private int idleCompleteTime;
-        private Random random;
+        Common.Timer idleTimer;
+        Random random;
 
         private Vector2 ai_position;
         enum AI_state {
             Idle, Approach
         };
 
-        AI_state ai_state = AI_state.Idle;
+        AI_state ai_state;
 
         public Sheep()
         {
             random = new Random();
+            idleTimer = new Common.Timer();
+            this.ai_pre_idle_state();
+            
 
             position = new Vector2(0, 320);
             velocity = Vector2.Zero;
@@ -92,30 +95,32 @@ namespace SheepsGame.GameObjects
             switch (this.ai_state)
             {
                 case AI_state.Idle:
-                    ai_idle_state(gameTime);
+                    ai_idle_state();
                     break;
                 case AI_state.Approach:
-                    ai_approach_position_state(gameTime);
+                    ai_approach_position_state();
                     break;
             }
 
             UpdatePosition();
         }
 
-        private void ai_pre_idle_state(GameTime time)
+        private void ai_pre_idle_state()
         {
-            idleCompleteTime = time.TotalGameTime.Seconds + random.Next(3, 7); //3-7 сек покоя
+            idleTimer.SecondsUntilExpire = random.Next(3, 7);
+            idleTimer.Start();
+
             ai_state = AI_state.Idle;
 
         }
 
-        private void ai_idle_state(GameTime time)
+        private void ai_idle_state()
         {
             // Не делаем ничего
             slowDown();
 
             // Проверяем, прошло ли 3-7 сек
-            if (time.TotalGameTime.Seconds >= idleCompleteTime)
+            if (idleTimer.Expired)
             {
                 ai_pre_approach_state();
             }
@@ -128,7 +133,7 @@ namespace SheepsGame.GameObjects
             ai_state = AI_state.Approach;
         }
 
-        private void ai_approach_position_state(GameTime time)
+        private void ai_approach_position_state()
         {
             // Приближаемся к позиции
             if (ai_position.X > position.X + 10)
@@ -140,7 +145,7 @@ namespace SheepsGame.GameObjects
             else
             {
                 // Равно
-                ai_pre_idle_state(time);
+                ai_pre_idle_state();
             }
         }
 

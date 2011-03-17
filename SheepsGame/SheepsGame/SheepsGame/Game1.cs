@@ -98,6 +98,7 @@ namespace SheepsGame
 
         protected override void Update(GameTime gameTime)
         {
+            Common.TimerManager.Instance.Update(gameTime);
             TouchCollection touches = TouchPanel.GetState();
 
             //guard.FireBullet();
@@ -117,6 +118,8 @@ namespace SheepsGame
             //(“»Ã)
             ufo.Update(gameTime);
             sheep.Update(gameTime);
+
+            
 
             base.Update(gameTime);
         }
