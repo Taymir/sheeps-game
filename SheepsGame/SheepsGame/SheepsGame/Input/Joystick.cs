@@ -26,6 +26,17 @@ namespace SheepsGame.Input
         {
             textureJoystick = texture;
             positionJoystick = position;
+
+            local2GlobalCoords(ref rightButton);
+            local2GlobalCoords(ref leftButton);
+            local2GlobalCoords(ref upButton);
+            local2GlobalCoords(ref downButton);
+            local2GlobalCoords(ref centerButton);
+        }
+
+        private void local2GlobalCoords(ref Rectangle buttonRect)
+        {
+            buttonRect.Offset((int)positionJoystick.X, (int)positionJoystick.Y);
         }
 
         public void Update(TouchCollection touches, GameObjects.Ufo.Ufo ufo)
@@ -60,8 +71,6 @@ namespace SheepsGame.Input
 
         private bool buttonClicked(TouchLocation touch, Rectangle buttonRect)
         {
-            buttonRect.Offset((int)positionJoystick.X, (int)positionJoystick.Y);
-
             if(buttonRect.Contains((int)touch.Position.X, (int)touch.Position.Y))
                 return true;
             return false;
