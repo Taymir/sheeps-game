@@ -137,6 +137,9 @@ namespace SheepsGame
             sheep.Draw(spriteBatch);
             ufo.Draw(spriteBatch);
             joystick.Draw(spriteBatch);
+
+            float fps = (1000.0f / gameTime.ElapsedGameTime.Milliseconds);
+            spriteBatch.DrawString(spriteFont, fps.ToString(), new Vector2(GraphicsDevice.Viewport.Width - 70, 0), Color.Green);
             spriteBatch.End();
 
             base.Draw(gameTime);
