@@ -11,34 +11,23 @@ namespace SheepsGame.GameObjects.Ufo
     {
         private const string textureName = "ufo";
         private Texture2D texture;
-        public Vector2 position = new Vector2(100, 100);
+        public Vector2 position;
         public Vector2 velocity;
 
-        private float speed = 3.5f;
-        private float friction = 0.93f;
-        private float maxspeed = 16.0f;
-        private float rotation = 0.0f;
+        public float rotation = 0.0f;
+        public float horizontalAcceleration = 0.0f;
+        public float verticalAcceleration = 0.0f;
+
+        private const float MoveAcceleration = 100f;// pixels per second
+        private const float MoveFriction = 2.1f;   // percents per second
+        private const float maxspeed = 16.0f;
 
         private GameObjects.Ufo.Ray ray;
 
-        public float x
+        public Ufo(Vector2 position)
         {
-            get
-            {
-                return position.X;
-            }
-        }
-
-        public float y
-        {
-            get
-            {
-                return position.Y;
-            }
-        }
-
-        public Ufo()
-        {
+            this.position = position;
+            this.velocity = Vector2.Zero;
             this.ray = new Ray();
         }
 
@@ -54,34 +43,10 @@ namespace SheepsGame.GameObjects.Ufo
             ray.UnloadContent();
         }
 
-        public void goLeft()
-        {
-            velocity.X -= speed;
-        }
-
-        public void goRight()
-        {
-            velocity.X += speed;
-        }
-
-        public void goUp()
-        {
-            velocity.Y -= speed;
-        }
-
-        public void goDown()
-        {
-            velocity.Y += speed;
-        }
-
-        public void slowDown()
-        {
-            velocity *= friction;
-        }
-
         public void fire()
         {
-            ray.visible = true;
+            if(Math.Abs(velocity.X) < 1f && Math.Abs(velocity.Y) < 1f)
+                ray.visible = true;
         }
 
         public void stopFire()
@@ -89,61 +54,47 @@ namespace SheepsGame.GameObjects.Ufo
             ray.visible = false;
         }
 
-        private void correctLowVelocity()
+        public void Update(GameTime gameTime)
         {
-            if (velocity.X < .5f && velocity.X > -.5f)
-                velocity.X = 0;
-            if (velocity.Y < .5f && velocity.Y > -.5f)
-                velocity.Y = 0;
-        }
+            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        private void UpdatePosition()
-        {
-            if (!Game1.level1.Scroll(velocity.X))
+            // accelerating velocity
+            velocity.X += horizontalAcceleration * MoveAcceleration * elapsed;
+            velocity.Y += verticalAcceleration * MoveAcceleration * elapsed;
+
+            // deaccelerating
+            if (Math.Abs(horizontalAcceleration) < .1f)
+                velocity.X *= (1 - MoveFriction * elapsed);
+            if (Math.Abs(verticalAcceleration) < .1f)
+                velocity.Y *= (1 - MoveFriction * elapsed);
+
+            // nulling acceleration for next frame
+            horizontalAcceleration = 0.0f;
+            verticalAcceleration = 0.0f;
+
+            // speed limit
+            velocity.X = MathHelper.Clamp(velocity.X, -maxspeed, maxspeed);
+            velocity.Y = MathHelper.Clamp(velocity.Y, -maxspeed, maxspeed);
+
+            // correcting small velocity
+            if (Math.Abs(velocity.X) < .5f)
+                velocity.X = 0;
+            if (Math.Abs(velocity.Y) < .5f)
+                velocity.Y = 0;
+
+            // Отклонение из-за силы инерции
+            this.rotation = (float)MathHelper.ToRadians(velocity.X);
+
+            // Обновление координат
+            if (!Game1.level1.Scroll(velocity.X)) //@TMP
                 position.X += velocity.X;
             position.Y += velocity.Y;
 
+            // Луч, следует за кораблем
+            if (Math.Abs(velocity.X) >= 1f || Math.Abs(velocity.Y) >= 1f)
+                ray.visible = false;
             ray.position = this.position;
-        }
-
-        private void limitSpeed()
-        {
-            if (velocity.X > maxspeed)
-                velocity.X = maxspeed;
-            else if (velocity.X < -maxspeed)
-                velocity.X = -maxspeed;
-
-            if (velocity.Y > maxspeed)
-                velocity.Y = maxspeed;
-            else if (velocity.Y < -maxspeed)
-                velocity.Y = -maxspeed;
-        }
-
-        // Отклонение из-за силы инерции
-        private void inertiaDeviation()
-        {
-            this.rotation = (float)deg2rad(velocity.X);
-        }
-
-        private double deg2rad(double deg)
-        {
-            return deg * Math.PI / 180;
-        }
-
-        private double rad2deg(double rad)
-        {
-            return rad * 180 / Math.PI;
-        }
-
-        public void Update(GameTime time)
-        {
-            slowDown();
-            correctLowVelocity();
-            UpdatePosition();
-            limitSpeed();
-            inertiaDeviation();
-            
-            ray.Update(time);
+            ray.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)

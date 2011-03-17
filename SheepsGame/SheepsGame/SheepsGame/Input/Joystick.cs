@@ -43,22 +43,23 @@ namespace SheepsGame.Input
         {
             if (touches.Count > 0)
             {
+                //@TODO: Переделать джойстик под аналоговое управление (чем левее жму, тем быстрее НЛО ускоряется влево и т.п.)
                 if (buttonClicked(touches[0], rightButton))
-                    ufo.goRight();
+                    ufo.horizontalAcceleration = +1;
                 if (buttonClicked(touches[0], leftButton))
-                    ufo.goLeft();
+                    ufo.horizontalAcceleration = -1;
                 if (buttonClicked(touches[0], upButton))
-                    ufo.goUp();
+                    ufo.verticalAcceleration = -1;
                 if (buttonClicked(touches[0], downButton))
-                    ufo.goDown();
+                    ufo.verticalAcceleration = +1;
 
                 if (buttonClicked(touches[0], centerButton))
                 {
                     if (!centerButtonClicked)
                     {
                         centerButtonClicked = true;
-                        ufo.fire();
                     }
+                    ufo.fire();
                 }
             } else {
                 if (centerButtonClicked)

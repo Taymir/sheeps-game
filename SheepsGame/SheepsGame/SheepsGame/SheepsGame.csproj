@@ -85,6 +85,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\SheepAI.cs" />
     <Compile Include="Common\TimeManager.cs" />
     <Compile Include="GameObjects\Ufo\Ray.cs" />
     <Compile Include="GameObjects\Sheep.cs" />

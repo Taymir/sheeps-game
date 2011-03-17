@@ -24,10 +24,12 @@ namespace SheepsGame
         Guard guard;
 
         GameObjects.Ufo.Ufo ufo;
+        GameObjects.Sheep sheep;
+        AI.SheepAI sheepAi;
         Joystick joystick;
 
         public static Game1 game;
-        private GameObjects.Sheep sheep;
+
         public SpriteFont spriteFont;
 
         public static Level level1;
@@ -53,8 +55,9 @@ namespace SheepsGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            sheep = new GameObjects.Sheep();
-            ufo = new GameObjects.Ufo.Ufo();
+            sheep = new GameObjects.Sheep(new Vector2(0, 320));
+            ufo = new GameObjects.Ufo.Ufo(new Vector2(GraphicsDevice.Viewport.Width / 2, 100));
+            sheepAi = new AI.SheepAI(sheep);
             base.Initialize();
         }
 
@@ -76,8 +79,6 @@ namespace SheepsGame
             ufo.LoadContent();
             joystick = new Joystick(Content.Load<Texture2D>("Joystick"), new Vector2(GraphicsDevice.Viewport.Width - 175, GraphicsDevice.Viewport.Height / 2 - 60));
 
-            
-            ufo.position.X = GraphicsDevice.Viewport.Width / 2;
 
             sheep.LoadContent();
 
@@ -116,6 +117,7 @@ namespace SheepsGame
             mainMenu.Update(gameTime, touches);
 
             //(“»Ã)
+            sheepAi.Update(gameTime);
             ufo.Update(gameTime);
             sheep.Update(gameTime);
 
@@ -138,8 +140,9 @@ namespace SheepsGame
             ufo.Draw(spriteBatch);
             joystick.Draw(spriteBatch);
 
-            float fps = (1000.0f / gameTime.ElapsedGameTime.Milliseconds);
-            spriteBatch.DrawString(spriteFont, fps.ToString(), new Vector2(GraphicsDevice.Viewport.Width - 70, 0), Color.Green);
+            // FPS COUNTER.
+            //float fps = (1000.0f / gameTime.ElapsedGameTime.Milliseconds);
+            //spriteBatch.DrawString(spriteFont, fps.ToString(), new Vector2(GraphicsDevice.Viewport.Width - 70, 0), Color.Green);
             spriteBatch.End();
 
             base.Draw(gameTime);

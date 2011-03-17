@@ -53,7 +53,7 @@ namespace SheepsGame
                 goRight = true;
 
             if (goRight)
-                position.X += 1 * gameTime.ElapsedGameTime.Milliseconds / 10;
+                position.X += 1 * gameTime.ElapsedGameTime.Milliseconds / 10;//@TODO: Заменить на velocity
             else
                 position.X -= 1 * gameTime.ElapsedGameTime.Milliseconds / 10;
             UpdateBullets();
