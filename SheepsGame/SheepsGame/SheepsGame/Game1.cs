@@ -13,15 +13,12 @@ using SheepsGame.Input;
 
 namespace SheepsGame
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         MainMenu mainMenu;
-        Guard guard;
+        GameObjects.Guard.Guard guard;
 
         GameObjects.Ufo.Ufo ufo;
         GameObjects.Sheep sheep;
@@ -46,40 +43,27 @@ namespace SheepsGame
             graphics.IsFullScreen = true;
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             sheep = new GameObjects.Sheep(new Vector2(0, 320));
             ufo = new GameObjects.Ufo.Ufo(new Vector2(GraphicsDevice.Viewport.Width / 2, 100));
+            guard = new GameObjects.Guard.Guard(new Vector2(100, 320));
             sheepAi = new AI.SheepAI(sheep);
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-            guard = new Guard(Content.Load<Texture2D>("guard"), Content.Load<Texture2D>("bullet"));
-            guard.position.Y = graphics.PreferredBackBufferHeight - guard.texture.Height - 5;
             spriteFont = Content.Load<SpriteFont>("default");
 
             mainMenu = new MainMenu();
             ufo.LoadContent();
             joystick = new Joystick(Content.Load<Texture2D>("Joystick"), new Vector2(GraphicsDevice.Viewport.Width - 175, GraphicsDevice.Viewport.Height / 2 - 60));
 
-
+            guard.LoadContent();
             sheep.LoadContent();
 
             level1 = new Level(3000);
@@ -92,8 +76,6 @@ namespace SheepsGame
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-            sheep.UnloadContent();
-            ufo.UnloadContent();
         }
 
 
@@ -113,7 +95,7 @@ namespace SheepsGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            //guard.Update(gameTime);
+            guard.Update(gameTime);
             mainMenu.Update(gameTime, touches);
 
             //(“»Ã)
@@ -133,7 +115,7 @@ namespace SheepsGame
 
             spriteBatch.Begin();
             level1.Draw(spriteBatch);
-            //guard.Draw(spriteBatch);
+            guard.Draw(spriteBatch);
             //mainMenu.Draw(spriteBatch);
 
             sheep.Draw(spriteBatch);

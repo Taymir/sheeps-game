@@ -7,14 +7,11 @@ using Microsoft.Xna.Framework;
 
 namespace SheepsGame.GameObjects.Ufo
 {
-    class Ufo
+    class Ufo : GameObject
     {
         private const string textureName = "ufo";
-        private Texture2D texture;
-        public Vector2 position;
         public Vector2 velocity;
 
-        public float rotation = 0.0f;
         public float horizontalAcceleration = 0.0f;
         public float verticalAcceleration = 0.0f;
 
@@ -24,23 +21,17 @@ namespace SheepsGame.GameObjects.Ufo
 
         private GameObjects.Ufo.Ray ray;
 
-        public Ufo(Vector2 position)
+        public Ufo(Vector2 position) : base(position, textureName)
         {
-            this.position = position;
             this.velocity = Vector2.Zero;
             this.ray = new Ray();
         }
 
-        public void LoadContent()
+        public override void LoadContent()
         {
-            texture = Game1.game.Content.Load<Texture2D>(textureName);
+            base.LoadContent();
             ray.LoadContent();
-        }
-
-        public void UnloadContent()
-        {
-            //TODO
-            ray.UnloadContent();
+            this.SetOriginInCenter();
         }
 
         public void fire()
@@ -97,10 +88,10 @@ namespace SheepsGame.GameObjects.Ufo
             ray.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             ray.Draw(spriteBatch);
-            spriteBatch.Draw(texture, position, null, Color.White, rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 0f);
+            base.Draw(spriteBatch);
         }
     }
 }

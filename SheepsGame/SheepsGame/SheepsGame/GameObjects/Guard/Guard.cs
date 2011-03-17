@@ -5,67 +5,56 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace SheepsGame
+namespace SheepsGame.GameObjects.Guard
 {
-    class Guard
+    class Guard : GameObject
     {
-        public Texture2D texture;
+        private const string textureName = "guard";
 
-        public Vector2 position = new Vector2(100, 0);
-        bool goRight = true;
-        Bullet bullet = new Bullet();
-        float angle = (float)(Math.PI / 4);
+        public float movement = 0f;
+        const float maxspeed = 90f;
+        const float shootingAngle = (float)(Math.PI / 4);
 
-        public void FireBullet()
+        Bullet bullet;
+
+        public Guard(Vector2 position) : base(position, textureName)
         {
-            if (!bullet.alive)
-            {
-                bullet.position = this.position;
-                bullet.velocity = new Vector2((float)Math.Cos(angle) * 5.0f, -(float)Math.Sin(angle) * 5.0f);
-                bullet.alive = true;
-            }
+            bullet = new Bullet();
+            movement = +1f;
         }
 
-        public void UpdateBullets()
+        public override void LoadContent()
         {
-            if (bullet.alive)
-            {
-                bullet.position += bullet.velocity;
-                if (!new Rectangle(0, 0, Game1.game.graphics.GraphicsDevice.Viewport.Width, Game1.game.graphics.GraphicsDevice.Viewport.Height).Contains
-                    (new Rectangle((int)bullet.position.X, (int)bullet.position.Y, 10, 10)))
-                {
-                    bullet.alive = false;
-                }
-            }
-        }
-
-        public Guard(Texture2D texture, Texture2D bullet)
-        {
-            this.texture = texture;
-            this.bullet.texture = bullet;
+            base.LoadContent();
+            bullet.LoadContent();
         }
 
         public void Update(GameTime gameTime)
         {
-            if (position.X + texture.Width > Game1.game.graphics.PreferredBackBufferWidth)
-                goRight = false;
-            if (position.X < 0)
-                goRight = true;
+            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (goRight)
-                position.X += 1 * gameTime.ElapsedGameTime.Milliseconds / 10;//@TODO: Заменить на velocity
-            else
-                position.X -= 1 * gameTime.ElapsedGameTime.Milliseconds / 10;
-            UpdateBullets();
+            if (position.X + texture.Width > Game1.game.graphics.PreferredBackBufferWidth)
+                movement = -1f;
+            else if (position.X < 0)
+                movement = +1f;
+
+            // updating position
+            position.X += movement * maxspeed * elapsed;
+
+            // update bullet
+            Fire();//@TMP
+            bullet.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Fire()
         {
-            spriteBatch.Draw(texture, position, Color.White);
+            bullet.Fire(position, shootingAngle);
+        }
 
-          if(bullet.alive)
-            spriteBatch.Draw(bullet.texture, new Rectangle((int)bullet.position.X, (int)bullet.position.Y, 30, 30), null, Color.White, (float)Math.PI*2 - angle, 
-                new Vector2(bullet.texture.Width/2, bullet.texture.Height/2), SpriteEffects.None, 1.0f);
+        public override void Draw(SpriteBatch sprite)
+        {
+            base.Draw(sprite);
+            bullet.Draw(sprite);
         }
     }
 }

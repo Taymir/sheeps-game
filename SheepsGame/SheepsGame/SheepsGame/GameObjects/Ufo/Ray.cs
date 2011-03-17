@@ -7,30 +7,16 @@ using Microsoft.Xna.Framework;
 
 namespace SheepsGame.GameObjects.Ufo
 {
-    class Ray
+    class Ray : GameObject
     {
-        public Vector2 position = new Vector2(0, 0);
-        public bool visible = false;
-
         private const string textureName = "ray";
-        private Texture2D texture;
+
         private byte alpha = 100;
         private bool alphaGrow = false;
 
-
-        public Ray()
+        public Ray() : base(Vector2.Zero, textureName) 
         {
-
-        }
-
-        public void LoadContent()
-        {
-            texture = Game1.game.Content.Load<Texture2D>(textureName);
-        }
-
-        public void UnloadContent()
-        {
-            //TODO
+            visible = false;
         }
 
         public void Update(GameTime gameTime)
@@ -49,10 +35,11 @@ namespace SheepsGame.GameObjects.Ufo
                 
         }
 
-        public void Draw(SpriteBatch sprite)
+        public override void Draw(SpriteBatch sprite)
         {
             if(visible)
             {
+                Vector2 screenPosition = Game1.level1.GetScreenVector(position);
                 sprite.Draw(texture, position, null, new Color(255, 255, 255, alpha), 0f, new Vector2(texture.Width / 2, 0), 1f, SpriteEffects.None, 0f);
             }
         }
