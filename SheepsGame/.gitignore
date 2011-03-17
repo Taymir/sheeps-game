@@ -1,2 +1,5 @@
-SheepsGame/bin/
-SheepsGame/obj/
+SheepsGame/SheepsGame/bin/
+SheepsGame/SheepsGame/obj/
+SheepsGame/SheepsGameContent/bin/
+SheepsGame/SheepsGameContent/obj/
+*.cachefile
