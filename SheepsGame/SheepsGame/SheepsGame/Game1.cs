@@ -13,9 +13,8 @@ using SheepsGame.Input;
 
 namespace SheepsGame
 {
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public partial class Game1 : Microsoft.Xna.Framework.Game
     {
-        public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         MainMenu mainMenu;
         GameObjects.Guard.Guard guard;
@@ -24,12 +23,6 @@ namespace SheepsGame
         GameObjects.Sheep sheep;
         AI.SheepAI sheepAi;
         Joystick joystick;
-
-        public static Game1 game;
-
-        public SpriteFont spriteFont;
-
-        public static Level level1;
 
         public Game1()
         {

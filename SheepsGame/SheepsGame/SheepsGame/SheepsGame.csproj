@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="AI\SheepAI.cs" />
     <Compile Include="Common\TimeManager.cs" />
+    <Compile Include="Game1Globals.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\Ufo\Ray.cs" />
     <Compile Include="GameObjects\Sheep.cs" />
