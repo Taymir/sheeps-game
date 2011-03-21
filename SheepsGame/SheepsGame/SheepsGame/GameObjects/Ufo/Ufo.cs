@@ -77,19 +77,21 @@ namespace SheepsGame.GameObjects.Ufo
             this.rotation = (float)MathHelper.ToRadians(velocity.X);
 
             // Обновление координат
-            if (!Game1.level1.Scroll(velocity.X)) //@TMP
+            /*if (!Game1.level1.Scroll(velocity.X)) //@TMP
                 position.X += velocity.X;
-            position.Y += velocity.Y;
+            position.Y += velocity.Y;*/
+            UpdatePosition(velocity);
 
             // Луч, следует за кораблем
             if (Math.Abs(velocity.X) >= 1f || Math.Abs(velocity.Y) >= 1f)
                 ray.visible = false;
-            ray.position = this.position;
             ray.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            Game1.level1.TrackPosition(position);
+            ray.position = this.position;
             ray.Draw(spriteBatch);
             base.Draw(spriteBatch);
         }

@@ -18,7 +18,7 @@ namespace SheepsGame
             this.levelLenght = levelLength;
         }
 
-        public Boolean Scroll(float dx)
+        /*public Boolean Scroll(float dx)
         {
             if (ScrollX + dx >= 0 && ScrollX + dx <= levelLenght - Game1.game.GraphicsDevice.Viewport.Width)
             {
@@ -26,7 +26,7 @@ namespace SheepsGame
                 return true;
             }
             return false;
-        }
+        }*/
 
         public Rectangle GetScreenRect(Rectangle rect)
         {
@@ -36,13 +36,31 @@ namespace SheepsGame
             return screenRect;
         }
 
-        public Vector2 GetScreenVector(Vector2 vec)
+        /*public Vector2 GetScreenVector(Vector2 vec)
         {
             Vector2 screenVec = vec;
             screenVec.X -= ScrollX;
 
             return screenVec;
+        }*/
+
+        public Vector2 GetScreenPosition(Vector2 LevelPosition)
+        {
+            LevelPosition.X = MathHelper.Clamp(LevelPosition.X, 0, levelLenght);
+            Vector2 ScreenPosition = LevelPosition;
+            ScreenPosition.X -= ScrollX;
+
+            return ScreenPosition;
         }
+
+        public void TrackPosition(Vector2 TrackPosition)
+        {
+            float newScrollX = TrackPosition.X - Game1.game.graphics.GraphicsDevice.Viewport.Width / 2;//@TODO: Нло должно уходить в сторону когда достигается предел сцены
+
+            if (newScrollX >= 0 && newScrollX <= levelLenght - Game1.game.graphics.GraphicsDevice.Viewport.Width)
+                ScrollX = newScrollX;
+        }
+
 
         public void Draw(SpriteBatch spriteBatch)
         {

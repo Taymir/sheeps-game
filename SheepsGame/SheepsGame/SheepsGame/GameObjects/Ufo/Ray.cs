@@ -39,8 +39,8 @@ namespace SheepsGame.GameObjects.Ufo
         {
             if(visible)
             {
-                Vector2 screenPosition = Game1.level1.GetScreenVector(position);
-                sprite.Draw(texture, position, null, new Color(255, 255, 255, alpha), 0f, new Vector2(texture.Width / 2, 0), 1f, SpriteEffects.None, 0f);
+                Vector2 screenPosition = Game1.level1.GetScreenPosition(position);
+                sprite.Draw(texture, screenPosition, null, new Color(255, 255, 255, alpha), 0f, new Vector2(texture.Width / 2, 0), 1f, SpriteEffects.None, 0f);
             }
         }
     }

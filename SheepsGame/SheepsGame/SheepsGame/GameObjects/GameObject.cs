@@ -66,7 +66,7 @@ namespace SheepsGame.GameObjects
         {
             if (visible)
             {
-                Vector2 screenPosition = Game1.level1.GetScreenVector(position);
+                Vector2 screenPosition = Game1.level1.GetScreenPosition(position);
                 sprite.Draw(texture, screenPosition, null, Color.White, rotation, origin, scale, flip, 0f);
             }
         }
