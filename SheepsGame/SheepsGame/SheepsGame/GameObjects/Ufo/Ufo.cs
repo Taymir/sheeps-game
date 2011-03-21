@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace SheepsGame.GameObjects.Ufo
 {
-    class Ufo : GameObject
+    public class Ufo : GameObject
     {
         private const string textureName = "ufo";
         public Vector2 velocity;
@@ -18,6 +18,7 @@ namespace SheepsGame.GameObjects.Ufo
         private const float MoveAcceleration = 100f;// pixels per second
         private const float MoveFriction = 2.1f;   // percents per second
         private const float maxspeed = 16.0f;
+        private const float rayWorkingSpeed = 1.0f; // Максимальная скорость при которой работает луч
 
         private GameObjects.Ufo.Ray ray;
 
@@ -36,7 +37,7 @@ namespace SheepsGame.GameObjects.Ufo
 
         public void fire()
         {
-            if(Math.Abs(velocity.X) < 1f && Math.Abs(velocity.Y) < 1f)
+            if (Math.Abs(velocity.X) < rayWorkingSpeed && Math.Abs(velocity.Y) < rayWorkingSpeed)
                 ray.visible = true;
         }
 
@@ -45,7 +46,7 @@ namespace SheepsGame.GameObjects.Ufo
             ray.visible = false;
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -103,7 +104,7 @@ namespace SheepsGame.GameObjects.Ufo
             }
 
             // Луч, следует за кораблем
-            if (Math.Abs(velocity.X) >= 1f || Math.Abs(velocity.Y) >= 1f)
+            if (Math.Abs(velocity.X) >= rayWorkingSpeed || Math.Abs(velocity.Y) >= rayWorkingSpeed)
                 ray.visible = false;
             ray.position = this.position;
             ray.Update(gameTime);

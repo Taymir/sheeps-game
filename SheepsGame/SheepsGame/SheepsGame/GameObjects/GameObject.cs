@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace SheepsGame.GameObjects
 {
-    class GameObject
+    public abstract class GameObject
     {
         String textureName;
         protected Texture2D texture;
@@ -76,6 +76,11 @@ namespace SheepsGame.GameObjects
         protected void SetOriginInCenter()
         {
             this.origin = new Vector2(texture.Width / 2, texture.Height / 2);
+        }
+
+        public virtual void Update(GameTime gameTime)
+        {
+            //@EMPTY
         }
 
         public virtual void Draw(SpriteBatch sprite)

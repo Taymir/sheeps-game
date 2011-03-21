@@ -17,11 +17,7 @@ namespace SheepsGame
     {
         SpriteBatch spriteBatch;
         MainMenu mainMenu;
-        GameObjects.Guard.Guard guard;
 
-        GameObjects.Ufo.Ufo ufo;
-        GameObjects.Sheep sheep;
-        AI.SheepAI sheepAi;
         Joystick joystick;
 
         public Game1()
@@ -38,10 +34,18 @@ namespace SheepsGame
 
         protected override void Initialize()
         {
-            sheep = new GameObjects.Sheep(new Vector2(0, 320));
-            ufo = new GameObjects.Ufo.Ufo(new Vector2(GraphicsDevice.Viewport.Width / 2, 100));
-            guard = new GameObjects.Guard.Guard(new Vector2(100, 320));
-            sheepAi = new AI.SheepAI(sheep);
+            sheeps = new GameObjectList();
+            sheeps.Add( new GameObjects.Sheep(new Vector2(100, 320)) );
+            sheeps.Add( new GameObjects.Sheep(new Vector2(250, 320)) );
+            sheeps.Add( new GameObjects.Sheep(new Vector2(330, 320)) );
+            sheeps.Add( new GameObjects.Sheep(new Vector2(430, 320)) );
+            sheeps.Add( new GameObjects.Sheep(new Vector2(500, 320)) );
+
+            hostiles = new GameObjectList();
+            hostiles.Add( new GameObjects.Guard.Guard(new Vector2(100, 320)) );
+
+            player = new GameObjects.Ufo.Ufo(new Vector2(GraphicsDevice.Viewport.Width / 2, 100));
+
             base.Initialize();
         }
 
@@ -53,16 +57,14 @@ namespace SheepsGame
             spriteFont = Content.Load<SpriteFont>("default");
 
             mainMenu = new MainMenu();
-            ufo.LoadContent();
             joystick = new Joystick(Content.Load<Texture2D>("Joystick"), new Vector2(GraphicsDevice.Viewport.Width - 175, GraphicsDevice.Viewport.Height / 2 - 60));
-
-            guard.LoadContent();
-            sheep.LoadContent();
-
+            
             level1 = new Level(3000);
             level1.backgroundTexture = Content.Load<Texture2D>("fon_2");
 
-            
+            sheeps.LoadContent();
+            hostiles.LoadContent();
+            player.LoadContent();
         }
 
  
@@ -77,26 +79,16 @@ namespace SheepsGame
             Common.TimerManager.Instance.Update(gameTime);
             TouchCollection touches = TouchPanel.GetState();
 
-            //guard.FireBullet();
-            joystick.Update(touches, ufo);
-
-            KeyboardState keyState = Keyboard.GetState();
-            if (keyState.IsKeyDown(Keys.Escape))
-                Exit();
-
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            guard.Update(gameTime);
             mainMenu.Update(gameTime, touches);
+            joystick.Update(touches, player);
 
-            //(“»Ã)
-            sheepAi.Update(gameTime);
-            ufo.Update(gameTime);
-            sheep.Update(gameTime);
-
-            
+            sheeps.Update(gameTime);
+            hostiles.Update(gameTime);
+            player.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -107,13 +99,15 @@ namespace SheepsGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            level1.Draw(spriteBatch);
-            guard.Draw(spriteBatch);
-            //mainMenu.Draw(spriteBatch);
 
-            sheep.Draw(spriteBatch);
-            ufo.Draw(spriteBatch);
+            level1.Draw(spriteBatch);
+
+            sheeps.Draw(spriteBatch);
+            hostiles.Draw(spriteBatch);
+            player.Draw(spriteBatch);
+
             joystick.Draw(spriteBatch);
+            //mainMenu.Draw(spriteBatch);
 
             // FPS COUNTER.
             //float fps = (1000.0f / gameTime.ElapsedGameTime.Milliseconds);

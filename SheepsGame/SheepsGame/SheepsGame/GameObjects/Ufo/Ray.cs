@@ -19,7 +19,7 @@ namespace SheepsGame.GameObjects.Ufo
             visible = false;
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             if (visible)
             {

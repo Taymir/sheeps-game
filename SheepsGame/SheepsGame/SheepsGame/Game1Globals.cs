@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
+using SheepsGame.GameObjects;
 
 namespace SheepsGame
 {
@@ -24,5 +25,13 @@ namespace SheepsGame
 
         public GraphicsDeviceManager graphics;
         public SpriteFont spriteFont;
+
+        public Random random = new Random();
+
+        //////////// Игровые объекты /////////////
+        public GameObjectList sheeps;      // Овцы и прочая собираемая НЛОшкой живность
+        public GameObjectList hostiles;    // Представляющие опасность враги (сторож и т.п.)
+
+        public SheepsGame.GameObjects.Ufo.Ufo player;
     }
 }

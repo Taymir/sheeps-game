@@ -19,7 +19,6 @@ namespace SheepsGame.AI
 
         Vector2 target_position;
         Common.Timer idleTimer;
-        Random random;
         enum State
         {
             Idle, Approach
@@ -30,7 +29,6 @@ namespace SheepsGame.AI
 
         public SheepAI(GameObjects.Sheep sheep)
         {
-            this.random = new Random();
             this.self = sheep;
             idleTimer = new Common.Timer();
             pre_idle_state();
@@ -51,7 +49,7 @@ namespace SheepsGame.AI
 
         private void pre_idle_state()
         {
-            idleTimer.SecondsUntilExpire = random.Next(3, 7);
+            idleTimer.SecondsUntilExpire = Game1.game.random.Next(2, 9);
             idleTimer.Start();
 
             state = State.Idle;
@@ -63,7 +61,7 @@ namespace SheepsGame.AI
             // Не делаем ничего
             
 
-            // Проверяем, прошло ли 3-7 сек
+            // Проверяем, прошло ли время
             if (idleTimer.Expired)
             {
                 pre_approach_state();
@@ -72,7 +70,7 @@ namespace SheepsGame.AI
 
         private void pre_approach_state()
         {
-            float new_X = random.Next(50, 600);
+            float new_X = Game1.game.random.Next(10, Game1.level1.levelLenght - 10);
             target_position = new Vector2(new_X, self.position.Y);
             state = State.Approach;
         }

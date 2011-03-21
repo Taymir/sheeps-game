@@ -29,7 +29,7 @@ namespace SheepsGame.GameObjects.Guard
             bullet.LoadContent();
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 

@@ -26,7 +26,7 @@ namespace SheepsGame.GameObjects.Guard
             this.SetOriginInCenter();
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             if (visible)
             {
