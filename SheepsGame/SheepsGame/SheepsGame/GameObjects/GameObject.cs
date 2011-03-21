@@ -40,6 +40,22 @@ namespace SheepsGame.GameObjects
             }
         }
 
+        public int Width
+        {
+            get
+            {
+                return this.texture.Width;
+            }
+        }
+
+        public int Height
+        {
+            get 
+            {
+                return this.texture.Height;
+            }
+        }
+
         public GameObject(Vector2 position, String textureName)
         {
             this.position = position;
