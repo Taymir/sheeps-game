@@ -31,6 +31,8 @@ namespace SheepsGame.GameObjects.Ufo
 
                 if (alpha <= 50 || alpha >= 130)
                     alphaGrow = !alphaGrow;
+
+                
             }
                 
         }

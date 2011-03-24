@@ -29,6 +29,17 @@ namespace SheepsGame
             RemoveList.Clear();
         }
 
+        // Method for removing dead items.
+        public void RemoveDeadItems()
+        {
+            foreach (var item in this)
+            {
+                if (item.dead)
+                    RemoveList.Add(item);
+            }
+            PurgeRemovedItems();
+        }
+
         public void LoadContent()
         {
             foreach (var item in this)
@@ -43,6 +54,7 @@ namespace SheepsGame
             {
                 item.Update(Time);
             }
+            RemoveDeadItems();
         }
 
         public void Draw(SpriteBatch Batch)

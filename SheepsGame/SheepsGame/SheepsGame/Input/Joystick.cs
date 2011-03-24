@@ -58,8 +58,8 @@ namespace SheepsGame.Input
                     if (!centerButtonClicked)
                     {
                         centerButtonClicked = true;
+                        ufo.fire();
                     }
-                    ufo.fire();
                 }
             } else {
                 if (centerButtonClicked)

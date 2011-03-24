@@ -15,6 +15,8 @@ namespace SheepsGame.AI
 {
     class SheepAI
     {
+        public bool enabled = true;
+
         GameObjects.Sheep self;
 
         Vector2 target_position;
@@ -36,14 +38,17 @@ namespace SheepsGame.AI
 
         public void Update(GameTime gameTime)
         {
-            switch (state)
+            if (enabled)
             {
-                case State.Idle:
-                    idle_state();
-                    break;
-                case State.Approach:
-                    approach_position_state();
-                    break;
+                switch (state)
+                {
+                    case State.Idle:
+                        idle_state();
+                        break;
+                    case State.Approach:
+                        approach_position_state();
+                        break;
+                }
             }
         }
 

@@ -18,9 +18,10 @@ namespace SheepsGame.GameObjects.Ufo
         private const float MoveAcceleration = 100f;// pixels per second
         private const float MoveFriction = 2.1f;   // percents per second
         private const float maxspeed = 16.0f;
-        private const float rayWorkingSpeed = 1.0f; // ћаксимальна€ скорость при которой работает луч
+        private const float rayWorkingSpeed = 0.1f; // ћаксимальна€ скорость при которой работает луч
 
         private GameObjects.Ufo.Ray ray;
+        private Sheep current_sheep;
 
         public Ufo(Vector2 position) : base(position, textureName)
         {
@@ -38,12 +39,52 @@ namespace SheepsGame.GameObjects.Ufo
         public void fire()
         {
             if (Math.Abs(velocity.X) < rayWorkingSpeed && Math.Abs(velocity.Y) < rayWorkingSpeed)
+            {
                 ray.visible = true;
+
+                Sheep sheep = findSheepInRay();
+                if (sheep != null)
+                {
+                    current_sheep = sheep;
+                    sheep.startAbduction(this.position);
+                }
+            }
         }
+
+        private Sheep findSheepInRay()
+        {
+            foreach (Sheep sheep in Game1.game.sheeps)
+            {
+
+                if (this.ray.Bounds.Intersects(sheep.Bounds))
+                {
+                    return sheep;
+                }
+            }
+
+            return null;
+        }
+
+        /*private float getAngleBetweenObjs(GameObject obj1, GameObject obj2)
+        {
+            return (float)Math.Atan2(obj2.position.X - obj1.position.X, obj2.position.Y - obj1.position.Y);
+        }
+
+        private float getDistanceBetweenObjs(GameObject obj1, GameObject obj2)
+        {
+            return (float)Math.Sqrt(Math.Pow(obj2.position.X - obj1.position.X, 2) + Math.Pow(obj2.position.Y - obj1.position.Y, 2));
+        }*/
+
+
 
         public void stopFire()
         {
             ray.visible = false;
+            if (current_sheep != null)
+            {
+                current_sheep.abort_abduction();
+                current_sheep = null;
+            }
         }
 
         public override void Update(GameTime gameTime)

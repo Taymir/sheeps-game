@@ -22,6 +22,7 @@ namespace SheepsGame.GameObjects
         public float rotation = 0f;
         public float scale = 1f;
         public Boolean visible = true;
+        public Boolean dead = false;
 
         SpriteEffects flip = SpriteEffects.None;
 
@@ -53,6 +54,16 @@ namespace SheepsGame.GameObjects
             get 
             {
                 return this.texture.Height;
+            }
+        }
+
+        public Rectangle Bounds
+        {
+            get
+            {
+                Rectangle bounds = this.texture.Bounds;
+                bounds.Offset((int)this.position.X, (int)this.position.Y);
+                return bounds;
             }
         }
 

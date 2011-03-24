@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
 using SheepsGame.Input;
+using SheepsGame.GameObjects;
 
 namespace SheepsGame
 {
@@ -34,15 +35,17 @@ namespace SheepsGame
 
         protected override void Initialize()
         {
+            level1 = new Level(3000);
+
             sheeps = new GameObjectList();
-            sheeps.Add( new GameObjects.Sheep(new Vector2(100, 320)) );
-            sheeps.Add( new GameObjects.Sheep(new Vector2(250, 320)) );
-            sheeps.Add( new GameObjects.Sheep(new Vector2(330, 320)) );
-            sheeps.Add( new GameObjects.Sheep(new Vector2(430, 320)) );
-            sheeps.Add( new GameObjects.Sheep(new Vector2(500, 320)) );
+            sheeps.Add(new Sheep(new Vector2(100, Sheep.getStandartSheepY())));
+            sheeps.Add(new Sheep(new Vector2(250, Sheep.getStandartSheepY())));
+            sheeps.Add(new Sheep(new Vector2(330, Sheep.getStandartSheepY())));
+            sheeps.Add(new Sheep(new Vector2(430, Sheep.getStandartSheepY())));
+            sheeps.Add(new Sheep(new Vector2(500, Sheep.getStandartSheepY())));
 
             hostiles = new GameObjectList();
-            hostiles.Add( new GameObjects.Guard.Guard(new Vector2(100, 320)) );
+            //hostiles.Add( new GameObjects.Guard.Guard(new Vector2(100, 320)) );
 
             player = new GameObjects.Ufo.Ufo(new Vector2(GraphicsDevice.Viewport.Width / 2, 100));
 
@@ -59,7 +62,7 @@ namespace SheepsGame
             mainMenu = new MainMenu();
             joystick = new Joystick(Content.Load<Texture2D>("Joystick"), new Vector2(GraphicsDevice.Viewport.Width - 175, GraphicsDevice.Viewport.Height / 2 - 60));
             
-            level1 = new Level(3000);
+            
             level1.backgroundTexture = Content.Load<Texture2D>("fon_2");
 
             sheeps.LoadContent();
