@@ -15,13 +15,19 @@ namespace SheepsGame.GameObjects.Ufo
         public float horizontalAcceleration = 0.0f;
         public float verticalAcceleration = 0.0f;
 
-        private const float MoveAcceleration = 100f;// pixels per second
-        private const float MoveFriction = 2.1f;   // percents per second
-        private const float maxspeed = 16.0f;
+        private const float MoveAcceleration = 60f;// pixels per second
+        private const float MoveFriction = 4.0f;   // percents per second
+        private const float maxspeed = 14.0f;
         private const float rayWorkingSpeed = 0.1f; // Максимальная скорость при которой работает луч
 
         private GameObjects.Ufo.Ray ray;
-        private Sheep current_sheep;
+
+        Sheep sheep_onboard;
+
+        public bool hasSheep()
+        {
+            return sheep_onboard != null;
+        }
 
         public Ufo(Vector2 position) : base(position, textureName)
         {
@@ -38,56 +44,59 @@ namespace SheepsGame.GameObjects.Ufo
 
         public void fire()
         {
-            if (Math.Abs(velocity.X) < rayWorkingSpeed && Math.Abs(velocity.Y) < rayWorkingSpeed)
-            {
-                ray.visible = true;
-
-                Sheep sheep = findSheepInRay();
-                if (sheep != null)
-                {
-                    current_sheep = sheep;
-                    sheep.startAbduction(this.position);
-                }
-            }
+            if (isAtRayWorkingSpeed())
+                this.ray.fire();
         }
-
-        private Sheep findSheepInRay()
-        {
-            foreach (Sheep sheep in Game1.game.sheeps)
-            {
-
-                if (this.ray.Bounds.Intersects(sheep.Bounds))
-                {
-                    return sheep;
-                }
-            }
-
-            return null;
-        }
-
-        /*private float getAngleBetweenObjs(GameObject obj1, GameObject obj2)
-        {
-            return (float)Math.Atan2(obj2.position.X - obj1.position.X, obj2.position.Y - obj1.position.Y);
-        }
-
-        private float getDistanceBetweenObjs(GameObject obj1, GameObject obj2)
-        {
-            return (float)Math.Sqrt(Math.Pow(obj2.position.X - obj1.position.X, 2) + Math.Pow(obj2.position.Y - obj1.position.Y, 2));
-        }*/
-
-
 
         public void stopFire()
         {
-            ray.visible = false;
-            if (current_sheep != null)
-            {
-                current_sheep.abort_abduction();
-                current_sheep = null;
-            }
+            ray.stopFire();
+        }
+
+        public bool setSheep(Sheep sheep)
+        {
+            if (hasSheep())
+                return false;
+
+            this.sheep_onboard = sheep;
+            return true;
+        }
+
+        public Sheep popSheep()
+        {
+            Sheep sheep = sheep_onboard;
+            sheep_onboard = null;
+
+            return sheep;
         }
 
         public override void Update(GameTime gameTime)
+        {
+
+            // acceleration
+            acceleration(gameTime);
+
+            // speed limit
+            speedLimit();
+
+            // correcting small velocity
+            correctLowVelocity();
+
+            // Отклонение из-за силы инерции
+            inertiaDeflection();
+
+            // Обновление координат
+            UpdatePosition(velocity);
+
+            // Проверка на нахождение в пределах игрового экрана
+            handleLevelBorders();
+
+            // Луч, следует за кораблем
+            UpdateRow(gameTime);
+        }
+
+        #region Update SubMethods
+        private void acceleration(GameTime gameTime)
         {
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -104,24 +113,29 @@ namespace SheepsGame.GameObjects.Ufo
             // nulling acceleration for next frame
             horizontalAcceleration = 0.0f;
             verticalAcceleration = 0.0f;
+        }
 
-            // speed limit
+        private void speedLimit()
+        {
             velocity.X = MathHelper.Clamp(velocity.X, -maxspeed, maxspeed);
             velocity.Y = MathHelper.Clamp(velocity.Y, -maxspeed, maxspeed);
+        }
 
-            // correcting small velocity
+        private void correctLowVelocity()
+        {
             if (Math.Abs(velocity.X) < .5f)
                 velocity.X = 0;
             if (Math.Abs(velocity.Y) < .5f)
                 velocity.Y = 0;
+        }
 
-            // Отклонение из-за силы инерции
+        private void inertiaDeflection()
+        {
             this.rotation = (float)MathHelper.ToRadians(velocity.X);
+        }
 
-            // Обновление координат
-            UpdatePosition(velocity);
-
-            // Проверка на нахождение в пределах игрового экрана
+        private void handleLevelBorders()
+        {
             if (position.X + Width / 2 > Game1.level1.levelLenght)
             {
                 position.X = Game1.level1.levelLenght - Width / 2;
@@ -143,13 +157,22 @@ namespace SheepsGame.GameObjects.Ufo
                 position.Y = Height / 2;
                 velocity.Y *= -1;
             }
+        }
 
-            // Луч, следует за кораблем
-            if (Math.Abs(velocity.X) >= rayWorkingSpeed || Math.Abs(velocity.Y) >= rayWorkingSpeed)
-                ray.visible = false;
+        private void UpdateRow(GameTime gameTime)
+        {
+            if (!isAtRayWorkingSpeed())
+                ray.stopFire();
             ray.position = this.position;
             ray.Update(gameTime);
         }
+
+        private bool isAtRayWorkingSpeed()
+        {
+            return (Math.Abs(velocity.X) < rayWorkingSpeed &&
+                    Math.Abs(velocity.Y) < rayWorkingSpeed);
+        }
+        #endregion
 
         public override void Draw(SpriteBatch spriteBatch)
         {

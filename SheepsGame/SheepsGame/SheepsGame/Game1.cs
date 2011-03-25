@@ -35,7 +35,8 @@ namespace SheepsGame
 
         protected override void Initialize()
         {
-            level1 = new Level(3000);
+            level1 = new Level(1500);
+            platform = new Platform(new Vector2(level1.levelLenght - 300, level1.groundY));
 
             sheeps = new GameObjectList();
             sheeps.Add(new Sheep(new Vector2(100, Sheep.getStandartSheepY())));
@@ -64,6 +65,7 @@ namespace SheepsGame
             
             
             level1.backgroundTexture = Content.Load<Texture2D>("fon_2");
+            platform.LoadContent();
 
             sheeps.LoadContent();
             hostiles.LoadContent();
@@ -104,6 +106,7 @@ namespace SheepsGame
             spriteBatch.Begin();
 
             level1.Draw(spriteBatch);
+            platform.Draw(spriteBatch);
 
             sheeps.Draw(spriteBatch);
             hostiles.Draw(spriteBatch);

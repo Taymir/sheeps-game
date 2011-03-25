@@ -11,15 +11,144 @@ namespace SheepsGame.GameObjects.Ufo
     {
         private const string textureName = "ray";
 
-        private byte alpha = 100;
+        private byte alpha = 150;
         private bool alphaGrow = false;
+
+        Sheep current_sheep = null;
+        bool abducting = false;
 
         public Ray() : base(Vector2.Zero, textureName) 
         {
             visible = false;
         }
 
+        public override void LoadContent()
+        {
+            base.LoadContent();
+            this.origin = new Vector2(texture.Width / 2, 0);
+        }
+
+        public void fire()
+        {
+            this.visible = true;
+
+            if (!hasSheep() && !Game1.game.player.hasSheep())
+            {
+                Sheep found_sheep = findSheep();
+                if (found_sheep != null)
+                    startSheepAbduction(found_sheep);
+            }
+            else if (isOverPlatform() && Game1.game.player.hasSheep())
+            {
+                startSheepDescention(Game1.game.player.popSheep());
+            }
+        }
+
+        public void stopFire()
+        {
+            visible = false;
+            abortAbduction();
+        }
+
+        void startSheepAbduction(Sheep sheep)
+        {
+            current_sheep = sheep;
+            current_sheep.freezed = true;
+            abducting = true;
+        }
+
+        void abortAbduction()
+        {
+            abducting = false;
+        }
+
+        void startSheepDescention(Sheep sheep)
+        {
+            current_sheep = sheep;
+            current_sheep.position = this.position;
+            current_sheep.visible = true;
+            abducting = false;
+        }
+
+        bool isOverPlatform()
+        {
+            if (this.Bounds.Intersects(Game1.game.platform.Bounds))
+                return true;
+            return false;
+        }
+
+        bool hasSheep()
+        {
+            return current_sheep != null;
+        }
+
+        Sheep findSheep()
+        {
+            foreach (Sheep sheep in Game1.game.sheeps)
+            {
+                if (this.Bounds.Intersects(sheep.Bounds))
+                {
+                    return sheep;
+                }
+            }
+
+            return null;
+        }
+
         public override void Update(GameTime gameTime)
+        {
+            animateRow();
+
+            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (hasSheep())
+            {
+                // Поднимаем овцу на борт
+                if (abducting)
+                {
+                    const float shiftAccuracy = 5;
+                    const float abductionSpeed = 30f; //pixels per Second
+                    const float abductionScaleSpeed = .3f; //percent per Second
+
+                    if (current_sheep.position.X > position.X + shiftAccuracy)
+                        current_sheep.position.X -= abductionSpeed * elapsed;
+                    else if (current_sheep.position.X < position.X - shiftAccuracy)
+                        current_sheep.position.X += abductionSpeed * elapsed;
+
+                    current_sheep.position.Y -= abductionSpeed * elapsed;
+
+                    current_sheep.scale -= abductionScaleSpeed * elapsed;
+
+                    if (current_sheep.position.Y < position.Y || current_sheep.scale < .01f)
+                    {
+                        current_sheep.visible = false;
+                        Game1.game.player.setSheep(current_sheep);
+                        current_sheep = null;
+                    }
+                }
+                else
+                {
+                    // Спускаем овцу на землю
+                    if (current_sheep.position.Y < Sheep.getStandartSheepY())
+                    {
+                        const float fallingSpeed = 120f; // pixels per Second
+                        const float fallingScaleSpeed = 1.2f; //percent per Second
+
+                        current_sheep.position.Y += fallingSpeed * elapsed;
+                        current_sheep.scale += fallingScaleSpeed * elapsed;
+                    }
+                    else
+                    {
+                        current_sheep.scale = 1f;
+                        current_sheep.freezed = false;
+                        current_sheep = null;
+                    }
+
+                }
+            }
+        }
+
+        void animateRow()
         {
             if (visible)
             {
@@ -29,20 +158,8 @@ namespace SheepsGame.GameObjects.Ufo
                 else
                     alpha -= 5;
 
-                if (alpha <= 50 || alpha >= 130)
+                if (alpha <= 120 || alpha >= 200)
                     alphaGrow = !alphaGrow;
-
-                
-            }
-                
-        }
-
-        public override void Draw(SpriteBatch sprite)
-        {
-            if(visible)
-            {
-                Vector2 screenPosition = Game1.level1.GetScreenPosition(position);
-                sprite.Draw(texture, screenPosition, null, new Color(255, 255, 255, alpha), 0f, new Vector2(texture.Width / 2, 0), 1f, SpriteEffects.None, 0f);
             }
         }
     }

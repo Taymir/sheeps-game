@@ -61,8 +61,11 @@ namespace SheepsGame.GameObjects
         {
             get
             {
+                if (!visible)
+                    return new Rectangle(int.MinValue, int.MinValue, 0, 0);
+
                 Rectangle bounds = this.texture.Bounds;
-                bounds.Offset((int)this.position.X, (int)this.position.Y);
+                bounds.Offset((int)(this.position.X - this.origin.X), (int)(this.position.Y - this.origin.Y));
                 return bounds;
             }
         }

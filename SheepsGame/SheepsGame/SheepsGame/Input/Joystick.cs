@@ -79,7 +79,9 @@ namespace SheepsGame.Input
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(textureJoystick, positionJoystick, Color.White);
+            
+
+            spriteBatch.Draw(textureJoystick, positionJoystick, new Color(255, 255, 255, 200));
         }
     }
 }

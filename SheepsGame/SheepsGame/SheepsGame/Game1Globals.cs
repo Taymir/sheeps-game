@@ -33,5 +33,6 @@ namespace SheepsGame
         public GameObjectList hostiles;    // Представляющие опасность враги (сторож и т.п.)
 
         public SheepsGame.GameObjects.Ufo.Ufo player;
+        public SheepsGame.GameObjects.Platform platform;
     }
 }
