@@ -67,7 +67,7 @@ namespace SheepsGame.GameObjects.Ufo
 
         bool isOverPlatform()
         {
-            if (this.Bounds.Intersects(Game1.game.platform.Bounds))
+            if (Game1.game.platform.isOverMe(position))
                 return true;
             return false;
         }
@@ -133,15 +133,17 @@ namespace SheepsGame.GameObjects.Ufo
         {
             if (current_sheep.position.Y < Sheep.getStandartSheepY())
             {
-                const float fallingSpeed = 120f; // pixels per Second
-                const float fallingScaleSpeed = 1.2f; //percent per Second
+                const float fallingSpeed = 160f * 3; // pixels per Second
+                const float fallingScaleSpeed = .9f * 3; //percent per Second
 
                 current_sheep.position.Y += fallingSpeed * elapsed;
-                current_sheep.scale += fallingScaleSpeed * elapsed;
+                if (current_sheep.scale < 1f)
+                    current_sheep.scale += fallingScaleSpeed * elapsed;
             }
             else
             {
                 current_sheep.scale = 1f;
+                current_sheep.position.Y = Sheep.getStandartSheepY();
                 current_sheep.freezed = false;
                 current_sheep = null;
             }
@@ -150,8 +152,8 @@ namespace SheepsGame.GameObjects.Ufo
         private void processAbduction(float elapsed)
         {
             const float shiftAccuracy = 5;
-            const float abductionSpeed = 30f; //pixels per Second
-            const float abductionScaleSpeed = .3f; //percent per Second
+            const float abductionSpeed = 160f; //pixels per Second
+            const float abductionScaleSpeed = .9f; //percent per Second
 
             if (current_sheep.position.X > position.X + shiftAccuracy)
                 current_sheep.position.X -= abductionSpeed * elapsed;

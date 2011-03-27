@@ -136,25 +136,34 @@ namespace SheepsGame.GameObjects.Ufo
 
         private void handleLevelBorders()
         {
-            if (position.X + Width / 2 > Game1.level1.levelLenght)
+            float halfWidth = Width / 2;
+            float halfHeight = Height / 2;
+
+            float leftBorder = 0;
+            float rightBorder = Game1.level1.levelLenght;
+
+            float topBorder = 0;
+            float bottomBorder = Game1.level1.groundY - this.ray.Height;
+
+            if (position.X + halfWidth > rightBorder)
             {
-                position.X = Game1.level1.levelLenght - Width / 2;
+                position.X = rightBorder - halfWidth;
                 velocity.X *= -1;
             }
-            else if (position.X - Width / 2 < 0)
+            else if (position.X - halfWidth < leftBorder)
             {
-                position.X = Width / 2;
+                position.X = leftBorder + halfWidth;
                 velocity.X *= -1;
             }
 
-            if (position.Y + Height / 2 > Game1.level1.groundY)
+            if (position.Y + halfHeight > bottomBorder)
             {
-                position.Y = Game1.level1.groundY - Height / 2;
+                position.Y = bottomBorder - halfHeight;
                 velocity.Y *= -1;
             }
-            else if (position.Y - Height / 2 < 0)
+            else if (position.Y - halfHeight < topBorder)
             {
-                position.Y = Height / 2;
+                position.Y = topBorder + halfHeight;
                 velocity.Y *= -1;
             }
         }

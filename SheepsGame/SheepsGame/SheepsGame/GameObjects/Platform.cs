@@ -10,7 +10,17 @@ namespace SheepsGame.GameObjects
     {
         const string textureName = "platform";
 
-        public Platform(Vector2 position) : base(position, textureName) { }
+        public Platform(Vector2 position) : base(position, textureName)
+        {
+            this.originRelative = Origin.TopCenter;
+        }
 
+        public bool isOverMe(Vector2 objPosition)
+        {
+            if (objPosition.X > position.X - Width / 2 && objPosition.X < position.X + Width / 2)
+                return true;
+            return false;
+
+        }
     }
 }
