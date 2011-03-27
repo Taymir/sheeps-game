@@ -33,13 +33,13 @@ namespace SheepsGame.GameObjects.Ufo
         {
             this.velocity = Vector2.Zero;
             this.ray = new Ray();
+            this.originRelative = Origin.MiddleCenter;
         }
 
         public override void LoadContent()
         {
             base.LoadContent();
             ray.LoadContent();
-            this.SetOriginInCenter();
         }
 
         public void fire()

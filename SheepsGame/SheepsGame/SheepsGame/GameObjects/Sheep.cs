@@ -38,6 +38,7 @@ namespace SheepsGame.GameObjects
         public Sheep(Vector2 position) : base(position, textureName) 
         {
             ai = new AI.SheepAI(this);
+            originRelative = Origin.BottomCenter;
         }
 
         public override void Update(GameTime gameTime)
@@ -60,7 +61,7 @@ namespace SheepsGame.GameObjects
 
         public static int getStandartSheepY() //@TMP
         {
-            return Game1.level1.groundY - 55;
+            return Game1.level1.groundY;
         }
     }
 }

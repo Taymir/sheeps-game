@@ -18,13 +18,29 @@ namespace SheepsGame.GameObjects
         String textureName;
         protected Texture2D texture;
         public Vector2 position;
-        protected Vector2 origin;
+        protected Origin originRelative;
+        private Vector2 origin;
         public float rotation = 0f;
         public float scale = 1f;
         public Boolean visible = true;
         public Boolean dead = false;
 
         SpriteEffects flip = SpriteEffects.None;
+
+        public enum Origin
+        {
+            TopLeft,
+            TopCenter,
+            TopRight,
+            
+            MiddleLeft,
+            MiddleCenter,
+            MiddleRight,
+
+            BottomLeft,
+            BottomCenter,
+            BottomRight
+        }
 
         public bool flipped
         {
@@ -74,22 +90,60 @@ namespace SheepsGame.GameObjects
         {
             this.position = position;
             this.textureName = textureName;
+            this.originRelative = Origin.TopLeft;
             this.origin = Vector2.Zero;
         }
 
         public virtual void LoadContent()
         {
             texture = Game1.game.Content.Load<Texture2D>(textureName);
+
+            this.origin = getOriginFromOriginRelative(originRelative, texture);
+        }
+
+        private Vector2 getOriginFromOriginRelative(Origin relative, Texture2D texture)
+        {
+            Vector2 result = Vector2.Zero;
+
+            switch (relative)
+            {
+                case Origin.TopLeft:
+                    result = new Vector2(0f, 0f);
+                    break;
+                case Origin.TopCenter:
+                    result = new Vector2(0.5f, 0f);
+                    break;
+                case Origin.TopRight:
+                    result = new Vector2(1f, 0f);
+                    break;
+                case Origin.MiddleLeft:
+                    result = new Vector2(0f, 0.5f);
+                    break;
+                case Origin.MiddleCenter:
+                    result = new Vector2(0.5f, 0.5f);
+                    break;
+                case Origin.MiddleRight:
+                    result = new Vector2(1f, 0.5f);
+                    break;
+                case Origin.BottomLeft:
+                    result = new Vector2(0f, 1f);
+                    break;
+                case Origin.BottomCenter:
+                    result = new Vector2(0.5f, 1f);
+                    break;
+                case Origin.BottomRight:
+                    result = new Vector2(1f, 1f);
+                    break;
+            }
+            result.X *= texture.Width;
+            result.Y *= texture.Height;
+
+            return result;
         }
 
         protected virtual void UpdatePosition(Vector2 velocity)
         {
             this.position += velocity;
-        }
-
-        protected void SetOriginInCenter()
-        {
-            this.origin = new Vector2(texture.Width / 2, texture.Height / 2);
         }
 
         public virtual void Update(GameTime gameTime)

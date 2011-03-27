@@ -20,12 +20,7 @@ namespace SheepsGame.GameObjects.Ufo
         public Ray() : base(Vector2.Zero, textureName) 
         {
             visible = false;
-        }
-
-        public override void LoadContent()
-        {
-            base.LoadContent();
-            this.origin = new Vector2(texture.Width / 2, 0);
+            this.originRelative = Origin.TopCenter;
         }
 
         public void fire()
@@ -84,15 +79,31 @@ namespace SheepsGame.GameObjects.Ufo
 
         Sheep findSheep()
         {
+            Sheep nearestSheep = null;
             foreach (Sheep sheep in Game1.game.sheeps)
             {
                 if (this.Bounds.Intersects(sheep.Bounds))
                 {
-                    return sheep;
+                    if (nearestSheep == null)
+                        nearestSheep = sheep;
+                    else
+                        nearestSheep = getNearestSheep(nearestSheep, sheep);
                 }
             }
 
-            return null;
+            return nearestSheep;
+        }
+
+        Sheep getNearestSheep(Sheep one, Sheep two)
+        {
+            if (sqrDistance(this.position, one.position) < sqrDistance(this.position, two.position))
+                return one;
+            return two;
+        }
+
+        float sqrDistance(Vector2 a, Vector2 b)
+        {
+            return (b.X - a.X) * (b.X - a.X) + (b.Y - a.Y) * (b.Y - a.Y);
         }
 
         public override void Update(GameTime gameTime)

@@ -18,12 +18,7 @@ namespace SheepsGame.GameObjects.Guard
         {
             this.visible = false;
             this.scale = 0.1f;
-        }
-
-        public override void LoadContent()
-        {
-            base.LoadContent();
-            this.SetOriginInCenter();
+            this.originRelative = Origin.MiddleCenter;
         }
 
         public override void Update(GameTime gameTime)
