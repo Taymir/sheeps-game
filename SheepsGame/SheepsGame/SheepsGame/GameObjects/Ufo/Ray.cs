@@ -106,45 +106,56 @@ namespace SheepsGame.GameObjects.Ufo
                 // Поднимаем овцу на борт
                 if (abducting)
                 {
-                    const float shiftAccuracy = 5;
-                    const float abductionSpeed = 30f; //pixels per Second
-                    const float abductionScaleSpeed = .3f; //percent per Second
-
-                    if (current_sheep.position.X > position.X + shiftAccuracy)
-                        current_sheep.position.X -= abductionSpeed * elapsed;
-                    else if (current_sheep.position.X < position.X - shiftAccuracy)
-                        current_sheep.position.X += abductionSpeed * elapsed;
-
-                    current_sheep.position.Y -= abductionSpeed * elapsed;
-
-                    current_sheep.scale -= abductionScaleSpeed * elapsed;
-
-                    if (current_sheep.position.Y < position.Y || current_sheep.scale < .01f)
-                    {
-                        current_sheep.visible = false;
-                        Game1.game.player.setSheep(current_sheep);
-                        current_sheep = null;
-                    }
+                    processAbduction(elapsed);
                 }
                 else
                 {
                     // Спускаем овцу на землю
-                    if (current_sheep.position.Y < Sheep.getStandartSheepY())
-                    {
-                        const float fallingSpeed = 120f; // pixels per Second
-                        const float fallingScaleSpeed = 1.2f; //percent per Second
-
-                        current_sheep.position.Y += fallingSpeed * elapsed;
-                        current_sheep.scale += fallingScaleSpeed * elapsed;
-                    }
-                    else
-                    {
-                        current_sheep.scale = 1f;
-                        current_sheep.freezed = false;
-                        current_sheep = null;
-                    }
+                    processFalling(elapsed);
 
                 }
+            }
+        }
+
+        #region Update SubMethods
+        private void processFalling(float elapsed)
+        {
+            if (current_sheep.position.Y < Sheep.getStandartSheepY())
+            {
+                const float fallingSpeed = 120f; // pixels per Second
+                const float fallingScaleSpeed = 1.2f; //percent per Second
+
+                current_sheep.position.Y += fallingSpeed * elapsed;
+                current_sheep.scale += fallingScaleSpeed * elapsed;
+            }
+            else
+            {
+                current_sheep.scale = 1f;
+                current_sheep.freezed = false;
+                current_sheep = null;
+            }
+        }
+
+        private void processAbduction(float elapsed)
+        {
+            const float shiftAccuracy = 5;
+            const float abductionSpeed = 30f; //pixels per Second
+            const float abductionScaleSpeed = .3f; //percent per Second
+
+            if (current_sheep.position.X > position.X + shiftAccuracy)
+                current_sheep.position.X -= abductionSpeed * elapsed;
+            else if (current_sheep.position.X < position.X - shiftAccuracy)
+                current_sheep.position.X += abductionSpeed * elapsed;
+
+            current_sheep.position.Y -= abductionSpeed * elapsed;
+
+            current_sheep.scale -= abductionScaleSpeed * elapsed;
+
+            if (current_sheep.position.Y < position.Y || current_sheep.scale < .01f)
+            {
+                current_sheep.visible = false;
+                Game1.game.player.setSheep(current_sheep);
+                current_sheep = null;
             }
         }
 
@@ -162,5 +173,6 @@ namespace SheepsGame.GameObjects.Ufo
                     alphaGrow = !alphaGrow;
             }
         }
+        #endregion
     }
 }
