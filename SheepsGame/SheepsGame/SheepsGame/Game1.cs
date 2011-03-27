@@ -21,6 +21,8 @@ namespace SheepsGame
 
         Joystick joystick;
 
+        GameObject girl; //@TMP
+
         public Game1()
         {
             game = this;
@@ -37,6 +39,8 @@ namespace SheepsGame
         {
             level1 = new Level(1500);
             platform = new Platform(new Vector2(level1.levelLenght - 300, level1.groundY));
+
+            girl = new TestingGirl(new Vector2(10, level1.groundY));
 
             sheeps = new GameObjectList();
             sheeps.Add(new Sheep(new Vector2(100, Sheep.getStandartSheepY())));
@@ -67,6 +71,8 @@ namespace SheepsGame
             level1.backgroundTexture = Content.Load<Texture2D>("fon_2");
             platform.LoadContent();
 
+            girl.LoadContent();
+
             sheeps.LoadContent();
             hostiles.LoadContent();
             player.LoadContent();
@@ -91,6 +97,8 @@ namespace SheepsGame
             mainMenu.Update(gameTime, touches);
             joystick.Update(touches, player);
 
+            girl.Update(gameTime);
+
             sheeps.Update(gameTime);
             hostiles.Update(gameTime);
             player.Update(gameTime);
@@ -112,6 +120,7 @@ namespace SheepsGame
             hostiles.Draw(spriteBatch);
             player.Draw(spriteBatch);
 
+            girl.Draw(spriteBatch);
             joystick.Draw(spriteBatch);
             //mainMenu.Draw(spriteBatch);
 

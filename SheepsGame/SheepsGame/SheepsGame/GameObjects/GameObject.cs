@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace SheepsGame.GameObjects
 {
-    public abstract class GameObject
+    public class GameObject
     {
         String textureName;
         protected Texture2D texture;
@@ -22,10 +22,16 @@ namespace SheepsGame.GameObjects
         private Vector2 origin;
         public float rotation = 0f;
         public float scale = 1f;
+        public float depth = 0f;
         public Boolean visible = true;
         public Boolean dead = false;
 
         SpriteEffects flip = SpriteEffects.None;
+
+        public int frameRate;
+        bool animate;
+        float vFrame;
+        int frameWidth, frameHeight, framesPerRow, frameCount;
 
         public enum Origin
         {
@@ -92,16 +98,36 @@ namespace SheepsGame.GameObjects
             this.textureName = textureName;
             this.originRelative = Origin.TopLeft;
             this.origin = Vector2.Zero;
+            this.animate = false;
+        }
+
+        public GameObject(Vector2 position, String textureName, int frameWidth, int frameHeight, int framesPerRow, int frameCount)
+        {
+            this.position = position;
+            this.textureName = textureName;
+            this.originRelative = Origin.TopLeft;
+            this.origin = Vector2.Zero;
+            
+            this.animate = true;
+            this.frameWidth = frameWidth;
+            this.frameHeight = frameHeight;
+            this.framesPerRow = framesPerRow;
+            this.frameCount = frameCount;
+            this.frameRate = 30;
+            this.vFrame = 0f;
         }
 
         public virtual void LoadContent()
         {
             texture = Game1.game.Content.Load<Texture2D>(textureName);
 
-            this.origin = getOriginFromOriginRelative(originRelative, texture);
+            if(animate)
+                this.origin = getOriginFromOriginRelative(originRelative, frameWidth, frameHeight);
+            else
+                this.origin = getOriginFromOriginRelative(originRelative, texture.Width, texture.Height);
         }
 
-        private Vector2 getOriginFromOriginRelative(Origin relative, Texture2D texture)
+        private Vector2 getOriginFromOriginRelative(Origin relative, int width, int height)
         {
             Vector2 result = Vector2.Zero;
 
@@ -135,8 +161,8 @@ namespace SheepsGame.GameObjects
                     result = new Vector2(1f, 1f);
                     break;
             }
-            result.X *= texture.Width;
-            result.Y *= texture.Height;
+            result.X *= width;
+            result.Y *= height;
 
             return result;
         }
@@ -149,6 +175,13 @@ namespace SheepsGame.GameObjects
         public virtual void Update(GameTime gameTime)
         {
             //@EMPTY
+            if (animate)
+            {
+                float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                vFrame += elapsed * frameRate;
+                vFrame %= frameCount;
+            }
         }
 
         public virtual void Draw(SpriteBatch sprite)
@@ -156,7 +189,18 @@ namespace SheepsGame.GameObjects
             if (visible)
             {
                 Vector2 screenPosition = Game1.level1.GetScreenPosition(position);
-                sprite.Draw(texture, screenPosition, null, Color.White, rotation, origin, scale, flip, 0f);
+
+                Rectangle? sourceRect = null;
+                if (animate)
+                {
+                    int Frame = (int)vFrame;
+                    int y = (int)(Math.Floor(Frame / framesPerRow) * frameHeight);
+                    int x = (int)(Frame % framesPerRow * frameWidth);
+
+                    sourceRect = new Rectangle(x, y, frameWidth, frameHeight);
+                }
+
+                sprite.Draw(texture, screenPosition, sourceRect, Color.White, rotation, origin, scale, flip, depth);
             }
         }
     }
